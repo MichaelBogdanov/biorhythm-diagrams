@@ -21,12 +21,13 @@ namespace App
                 chart1.Legends[0].Enabled = false;
             }
         }
-        public Array get_Days(int count, DateTime start, DateTime finish)
+
+        public Array get_Days(DateTime start, int count)
         {
             int[] days = new int[count];
             for (int i = 0; i < count; i++)
             {
-                days[i] = finish.AddDays(i).Subtract(start).Days;
+                days[i] = start.AddDays(i).Subtract(dateTimePicker1.Value).Days;
             }
             return days;
         }
@@ -38,21 +39,29 @@ namespace App
                 item.Points.Clear();
             }
 
+            DateTime start = DateTime.Now;
             int count = 7;
-            DateTime start = dateTimePicker1.Value;
-            DateTime finish = DateTime.Now;
+
             if (radioButton2.Checked)
             {
                 count = 31;
             }
-            else if (radioButton3.Checked)
+
+            DateTime finish = DateTime.Now + TimeSpan.FromDays(count);
+
+            if (radioButton3.Checked)
             {
-                count = dateTimePicker3.Value.Subtract(dateTimePicker2.Value).Days;
                 start = dateTimePicker2.Value;
                 finish = dateTimePicker3.Value;
+                if (finish < start)
+                {
+                    MessageBox.Show("Некорректный диапазон дат", "Ошибка", buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Error);
+                    return;
+                }
+                count = dateTimePicker3.Value.Subtract(dateTimePicker2.Value).Days;
             }
 
-            foreach (int K in get_Days(count, start, finish))
+            foreach (int K in get_Days(start, count))
             {
                 if (checkBox3.Checked)
                 {

@@ -125,7 +125,7 @@ namespace App
             this.groupBox2.Size = new System.Drawing.Size(224, 169);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Период построения биоритмов";
+            this.groupBox2.Text = "Период построения (от текущего дня)";
             // 
             // groupBox3
             // 
